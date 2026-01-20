@@ -1,7 +1,8 @@
 package ec.espe.demo;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PropinaTest {
 
@@ -17,8 +18,23 @@ class PropinaTest {
         () -> Propina.totalConPropina(-1.0, 10.0));
   }
 
-  // TODO: Agregar al menos 2 pruebas adicionales:
-  //  - porcentaje 0 devuelve subtotal
-  //  - porcentaje 100 duplica subtotal
-  //  - porcentaje fuera de rango lanza excepcion
+  @Test
+  void totalConPropina_porcentajeCero_devuelveSub_total() {
+    double obtenido = Propina.totalConPropina(100.0, 0.0);
+    assertEquals(100.0, obtenido, 0.000001);
+  }
+
+  @Test
+  void totalConPropina_porcentajeCien_duplicaSubtotal() {
+    double obtenido = Propina.totalConPropina(100.0, 100.0);
+    assertEquals(200.0, obtenido, 0.000001);
+  }
+
+  @Test
+  void totalConPropina_porcentajeFueraDeRango_lanzaExcepcion() {
+    assertThrows(IllegalArgumentException.class,
+        () -> Propina.totalConPropina(100.0, 101.0));
+    assertThrows(IllegalArgumentException.class,
+        () -> Propina.totalConPropina(100.0, -1.0));
+  }
 }
